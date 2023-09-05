@@ -10,17 +10,19 @@ public class UIInventoryEquipment : MonoBehaviour
 {
     [SerializeField] InventoryEquipmentComponent inventoryEquipment;
 
+    [Header("Inventory")]
     [SerializeField] Dropdown inventoryDropdown;
-
     [SerializeField] UIPanelSwitcher inventoryPanelSwitcher;
 
     [SerializeField] Dictionary<ItemInventoryType, UIInventoryPanel> UIInventoryPanels = new Dictionary<ItemInventoryType, UIInventoryPanel>();
+    
     [SerializeField] GameObject inventoryPanelPrefab;
     [SerializeField] Transform UIInventoryPanelObjectParent;
 
     Dictionary<ItemInventoryType, List<UIItemSlot>> inventorySlots = new Dictionary<ItemInventoryType, List<UIItemSlot>>();
 
     [SerializeField] Dictionary<ItemEquipmentType, UIEquipmentPanel> UIEquipmentPanels = new Dictionary<ItemEquipmentType, UIEquipmentPanel>();
+    [Header("Equipment")]
     [SerializeField] GameObject equipmentPanelPrefab;
     [SerializeField] Transform UIEquipmentPanelContainerPrefab;
     [SerializeField] Transform UIEquipmentPanelObjectParent;
@@ -31,10 +33,10 @@ public class UIInventoryEquipment : MonoBehaviour
     {
         inventoryDropdown.ClearOptions();
 
-        inventoryDropdown.onValueChanged.AddListener(OnDropdownsValueChanged);
+        inventoryDropdown.onValueChanged.AddListener(OnDropdownValueChanged);
     }
 
-    void OnDropdownsValueChanged(int value)
+    public void OnDropdownValueChanged(int value)
     {
         inventoryPanelSwitcher.SetCurrentPanel(value);
     }
@@ -79,7 +81,6 @@ public class UIInventoryEquipment : MonoBehaviour
         foreach(ItemEquipmentType itemEquipmentType in inventoryEquipment.equipmentSlotSizes.Keys)
         {
             List<UIItemSlot> itemSlots = UIEquipmentPanels[itemEquipmentType].CreateSlots(inventoryEquipment.equipmentSlotSizes[itemEquipmentType]);
-            print(itemSlots.Count);
             equipmentSlots[itemEquipmentType] = itemSlots;
 
             foreach (UIItemSlot itemSlot in itemSlots)
@@ -88,7 +89,7 @@ public class UIInventoryEquipment : MonoBehaviour
             }
         }
 
-        inventoryEquipment.ItemAddedToEquipment += AddItemToInventory;
+        inventoryEquipment.ItemAddedToInventory += AddItemToInventory;
         inventoryEquipment.ItemRemovedFromInventory += ItemRemovedFromInventory;
         inventoryEquipment.ItemAddedToEquipment += ItemAddedToEquipment;
         inventoryEquipment.ItemRemovedFromEquipment += ItemRemovedFromEquipment;

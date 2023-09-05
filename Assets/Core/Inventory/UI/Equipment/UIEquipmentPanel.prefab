@@ -116,6 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIItemSlotPrefab: {fileID: 9153640661921272079, guid: 8c251cb96e8424748b8902d29b502c72, type: 3}
   parentGridLayoutGroup: {fileID: 2489106865672979744}
+  panelEquipmentType: 0
 --- !u!114 &509154530027078517
 MonoBehaviour:
   m_ObjectHideFlags: 0

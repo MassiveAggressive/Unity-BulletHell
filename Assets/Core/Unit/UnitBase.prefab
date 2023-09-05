@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6536771478184573652}
   - component: {fileID: 5240455541443095816}
   - component: {fileID: 20016366075601505}
-  - component: {fileID: 6450416093365871458}
+  - component: {fileID: 2480837669566538698}
   m_Layer: 0
   m_Name: UnitBase
   m_TagString: Untagged
@@ -154,6 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 321e3d83a75e9f44da51b29332b2ca07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilitySystem: {fileID: 0}
+  ability: {fileID: 7365321880193194452, guid: 24505b0d28a1b1d4181e14dbbd11fd6c, type: 3}
   walkSpeed: 5
   rotationSpeed: 360
   weaponObject: {fileID: 1192996160235226993}
@@ -171,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dfc8dc905a6ab04aa6ce073683caf23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6450416093365871458
+--- !u!114 &2480837669566538698
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,9 +182,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8448108994476967414}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 339a1385fa976b84d91cd93cb79c0756, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ff573f428cd76747abd9d1920710c02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultAttributes:
+  - {fileID: 0}
 --- !u!1001 &1287690189461415845
 PrefabInstance:
   m_ObjectHideFlags: 0

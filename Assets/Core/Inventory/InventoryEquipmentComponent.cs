@@ -119,8 +119,6 @@ public class InventoryEquipmentComponent : MonoBehaviour
         movedItemSlot.movedItemSlot = itemSlot;
         ItemAddedToInventory?.Invoke(this, movedItemSlot);
 
-        print(inventorySlots[ItemInventoryType.PrimaryWeapon].Keys.Count);
-
         return true;
     }
 
