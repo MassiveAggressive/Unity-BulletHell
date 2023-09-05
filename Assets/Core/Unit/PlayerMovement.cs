@@ -11,8 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     PlayerInputActions playerInputActions;
 
-    public GameObject weaponObject;
-    public WeaponBase weapon;
+    [SerializeField] WeaponBase weapon;
 
     private void Awake()
     {
@@ -22,8 +21,6 @@ public class PlayerMovement : MonoBehaviour
 
         playerInputActions.Action.LeftClick.started += LeftClick_started;
         playerInputActions.Action.LeftClick.canceled += LeftClick_canceled;
-
-        weapon = weaponObject.GetComponent<WeaponBase>();
     }
 
     private void LeftClick_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -43,6 +40,14 @@ public class PlayerMovement : MonoBehaviour
         {
             GetComponent<InventoryEquipmentComponent>().AddItemToInventory(item);
         }
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            Time.timeScale = 0.1f;
+        }
+        if (Input.GetKeyUp(KeyCode.G))
+        {
+            Time.timeScale = 1f;
+        }
 
         Vector2 inputVector = playerInputActions.Movement.InputVector.ReadValue<Vector2>();
         Vector2 moveDelta = inputVector.normalized * walkSpeed * Time.deltaTime;
@@ -54,10 +59,13 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 direction = mousePosition - transform.position;
 
-        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
         float step = rotationSpeed * Time.deltaTime;
-        transform.up = direction.normalized;
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, targetAngle - 90), step);
+
+        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        float currentAngle = transform.rotation.eulerAngles.z;
+
+        float deltaAngle = currentAngle + step;
+
+        transform.rotation = Quaternion.Euler(0f, 0f, deltaAngle);
     }
 }

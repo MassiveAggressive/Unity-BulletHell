@@ -12,7 +12,7 @@ public class ProjectileMovement : MonoBehaviour
         Destroy(gameObject, 3f);
     }
 
-    void Update()
+    private void Update()
     {
         Vector3 moveDelta = transform.up * maxSpeed * Time.deltaTime;
         RaycastHit2D hit = Physics2D.BoxCast(transform.position, bulletSize, transform.rotation.eulerAngles.z, moveDelta.normalized, moveDelta.magnitude, LayerMask.GetMask("Wall"));

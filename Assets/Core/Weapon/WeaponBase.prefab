@@ -47,6 +47,7 @@ MonoBehaviour:
   fireRate: 1
   barrelCount: 5
   barrelDistance: 1
+  barrelAngle: 5
   isShooting: 1
   isShootAvailable: 1
   bulletPrefab: {fileID: 7615142129557885834, guid: 9d04a962d94177b4fa72203ebb9cb9cf, type: 3}
