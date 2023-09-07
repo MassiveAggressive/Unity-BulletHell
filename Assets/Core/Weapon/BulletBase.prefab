@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 311688949408032799}
   - component: {fileID: 6912020308189290341}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1666766143741576918}
   - component: {fileID: -915988236248265374}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BulletBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,3 +131,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 20
   bulletSize: {x: 0.1, y: 0.25}
+  damage: 10

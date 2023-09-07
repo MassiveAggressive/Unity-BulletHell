@@ -14,6 +14,7 @@ public class S_Item : ScriptableObject
     public bool isStackable = false;
     public int maxStack = 1;
     public int stack = 1;
+    public List<Attribute> attributes; 
     public GameObject gameObject;
 }
 public enum ItemPrimaryType

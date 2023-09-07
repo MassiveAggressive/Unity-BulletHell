@@ -11,7 +11,7 @@ public class UIInventoryEquipment : MonoBehaviour
     [SerializeField] InventoryEquipmentComponent inventoryEquipment;
 
     [Header("Inventory")]
-    [SerializeField] Dropdown inventoryDropdown;
+    [SerializeField] TMP_Dropdown inventoryDropdown;
     [SerializeField] UIPanelSwitcher inventoryPanelSwitcher;
 
     [SerializeField] Dictionary<ItemInventoryType, UIInventoryPanel> UIInventoryPanels = new Dictionary<ItemInventoryType, UIInventoryPanel>();
@@ -51,7 +51,7 @@ public class UIInventoryEquipment : MonoBehaviour
 
             UIInventoryPanels[itemInventoryType] = UIInventoryPanelObject.GetComponent<UIInventoryPanel>();
 
-            inventoryDropdown.options.Add(new Dropdown.OptionData(itemInventoryType.ToString()));
+            inventoryDropdown.options.Add(new TMP_Dropdown.OptionData(itemInventoryType.ToString()));
         }
 
         foreach (ItemEquipmentType itemEquipmentType in inventoryEquipment.equipmentSlotSizes.Keys)

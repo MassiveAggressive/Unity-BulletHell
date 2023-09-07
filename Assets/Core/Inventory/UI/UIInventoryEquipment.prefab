@@ -957,12 +957,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryEquipment: {fileID: 0}
-  inventoryDropdown: {fileID: 0}
+  inventoryDropdown: {fileID: 4440087627321516703}
   inventoryPanelSwitcher: {fileID: 1826611235481318065}
   inventoryPanelPrefab: {fileID: 4966253260468031741, guid: b32ef92b55af29e4196091c23fa469ab, type: 3}
   UIInventoryPanelObjectParent: {fileID: 4635364413255914736}
   equipmentPanelPrefab: {fileID: 4966253260468031741, guid: c493ec316018ffd4a88a59a80b95a62e, type: 3}
-  UIEquipmentPanelContainerPrefab: {fileID: 0}
+  UIEquipmentPanelContainerPrefab: {fileID: 8178579387246758678, guid: 564fdd7dac235494aaf77e328e417a95, type: 3}
   UIEquipmentPanelObjectParent: {fileID: 6665018462072111915}
 --- !u!114 &3426506476524263990
 MonoBehaviour:

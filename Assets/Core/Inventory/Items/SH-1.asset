@@ -21,4 +21,7 @@ MonoBehaviour:
   isStackable: 0
   maxStack: 1
   stack: 1
+  attributes:
+  - name: MaxShield
+    value: 100
   gameObject: {fileID: 0}

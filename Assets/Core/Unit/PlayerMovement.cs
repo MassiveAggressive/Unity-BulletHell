@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -34,12 +35,18 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public S_Item item;
+    public S_Item item2;
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.T)) 
         {
             GetComponent<InventoryEquipmentComponent>().AddItemToInventory(item);
         }
+        if(Input.GetKeyDown(KeyCode.Y)) 
+        {
+            GetComponent<InventoryEquipmentComponent>().AddItemToInventory(item2);
+        }
+
         if(Input.GetKeyDown(KeyCode.G))
         {
             Time.timeScale = 0.1f;
@@ -55,17 +62,13 @@ public class PlayerMovement : MonoBehaviour
         transform.position += new Vector3(moveDelta.x, moveDelta.y);
 
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = transform.position.z;
+        mousePosition.z = 0f;
 
-        Vector3 direction = mousePosition - transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(mousePosition - transform.position);
+
+        float Angle = Mathf.Atan2(mousePosition.y - transform.position.y, mousePosition.x - transform.position.x) * Mathf.Rad2Deg;
 
         float step = rotationSpeed * Time.deltaTime;
-
-        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        float currentAngle = transform.rotation.eulerAngles.z;
-
-        float deltaAngle = currentAngle + step;
-
-        transform.rotation = Quaternion.Euler(0f, 0f, deltaAngle);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, Angle), step);
     }
 }

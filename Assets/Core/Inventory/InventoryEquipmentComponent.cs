@@ -18,6 +18,8 @@ public class InventoryEquipmentComponent : MonoBehaviour
 
     Dictionary<int, ItemLocation> itemSlotLocations = new Dictionary<int, ItemLocation>();
 
+    Dictionary<string, float> localAttributes = new Dictionary<string, float>();
+
     public class MovedItemSlotArgs : EventArgs
     {
         public S_ItemSlot movedItemSlot;
@@ -103,11 +105,13 @@ public class InventoryEquipmentComponent : MonoBehaviour
 
     public bool AddItemToInventory(S_Item item)
     {
+        S_Item newItem = Instantiate(item);
+
         S_ItemSlot itemSlot = ScriptableObject.CreateInstance<S_ItemSlot>();
         itemSlot.slotID = CreateNewID();
-        itemSlot.item = item;
+        itemSlot.item = newItem;
 
-        ItemInventoryType itemInventoryType = item.itemInventoryType;
+        ItemInventoryType itemInventoryType = newItem.itemInventoryType;
 
         Dictionary<int, S_ItemSlot> inventorySlotsRef = inventorySlots[itemInventoryType];
 
@@ -176,6 +180,8 @@ public class InventoryEquipmentComponent : MonoBehaviour
             movedItemSlot.movedItemSlot = itemSlot;
             ItemAddedToEquipment?.Invoke(this, movedItemSlot);
 
+            EquipmentChanged();
+
             return true;
         }
 
@@ -195,8 +201,39 @@ public class InventoryEquipmentComponent : MonoBehaviour
             movedItemSlot.movedItemSlot = itemSlot;
             ItemRemovedFromEquipment?.Invoke(this, movedItemSlot);
 
+            EquipmentChanged();
+
             return true;
         }
         return false;
+    }
+
+    private void EquipmentChanged()
+    {
+        localAttributes.Clear();
+        foreach(ItemEquipmentType itemEquipmentType in equipmentSlots.Keys) 
+        {
+            foreach(int slotID in equipmentSlots[itemEquipmentType].Keys)
+            {
+                foreach(Attribute attribute in equipmentSlots[itemEquipmentType][slotID].item.attributes)
+                {
+                    float currentValue = 0f;
+
+                    if (localAttributes.ContainsKey(attribute.name))
+                    {
+                        currentValue = localAttributes[attribute.name];
+                    }
+
+                    currentValue += attribute.value;
+
+                    localAttributes[attribute.name] = currentValue;
+                }
+            }
+        }
+
+        foreach(string key in localAttributes.Keys)
+        {
+            print(key + ": " + localAttributes[key]);
+        }
     }
 }

@@ -21,4 +21,9 @@ MonoBehaviour:
   isStackable: 0
   maxStack: 1
   stack: 1
+  attributes:
+  - name: MaxDamage
+    value: 10
+  - name: MaxFireRate
+    value: 0.1
   gameObject: {fileID: 0}
