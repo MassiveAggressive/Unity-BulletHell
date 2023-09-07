@@ -231,9 +231,6 @@ public class InventoryEquipmentComponent : MonoBehaviour
             }
         }
 
-        foreach(string key in localAttributes.Keys)
-        {
-            print(key + ": " + localAttributes[key]);
-        }
+        GetComponent<AttributesComponent>().AddAttributeField("InventoryEquipmentComponent", localAttributes);
     }
 }

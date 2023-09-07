@@ -8,6 +8,10 @@ using UnityEngine.EventSystems;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float walkSpeed = 10f;
+    Vector2 inputVector = Vector2.zero;
+
+    //[SerializeField] float accelerationSpeed = 10f;
+
     [SerializeField] float rotationSpeed = 360f;
 
     PlayerInputActions playerInputActions;
@@ -56,7 +60,14 @@ public class PlayerMovement : MonoBehaviour
             Time.timeScale = 1f;
         }
 
-        Vector2 inputVector = playerInputActions.Movement.InputVector.ReadValue<Vector2>();
+        //Vector2 lastDirection = inputVector;
+        //inputVector = playerInputActions.Movement.InputVector.ReadValue<Vector2>();
+
+        //float deltaAngle = (Mathf.Atan2(lastDirection.y, lastDirection.x) * Mathf.Rad2Deg);
+
+        //print(deltaAngle);
+
+        inputVector = playerInputActions.Movement.InputVector.ReadValue<Vector2>();
         Vector2 moveDelta = inputVector.normalized * walkSpeed * Time.deltaTime;
 
         transform.position += new Vector3(moveDelta.x, moveDelta.y);
@@ -64,11 +75,9 @@ public class PlayerMovement : MonoBehaviour
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0f;
 
-        Quaternion targetRotation = Quaternion.LookRotation(mousePosition - transform.position);
-
         float Angle = Mathf.Atan2(mousePosition.y - transform.position.y, mousePosition.x - transform.position.x) * Mathf.Rad2Deg;
 
-        float step = rotationSpeed * Time.deltaTime;
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, Angle), step);
+        float rotationDelta = rotationSpeed * Time.deltaTime;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, Angle), rotationDelta);
     }
 }

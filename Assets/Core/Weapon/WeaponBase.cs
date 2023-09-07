@@ -106,12 +106,12 @@ public class WeaponBase : MonoBehaviour
         }
     }
 
-    void Shoot(float Distance = 0f)
+    void Shoot(float distance = 0f)
     {
         isShootAvailable = false;
         foreach(GameObject barrel in barrels) 
         {
-            Vector3 bulletPositionDelta = barrel.transform.up * Distance * bulletMaxSpeed;
+            Vector3 bulletPositionDelta = barrel.transform.up * distance * bulletMaxSpeed;
             GameObject bulletInstance = Instantiate(bulletPrefab, barrel.transform.position + bulletPositionDelta, barrel.transform.rotation);
         }
     }

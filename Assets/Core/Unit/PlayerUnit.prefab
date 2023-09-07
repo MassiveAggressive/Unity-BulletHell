@@ -367,7 +367,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0b2eea960a3a6d74181dae066a704031, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 49f09a02956c4af4589f11c5bd78c4bf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -788,6 +788,7 @@ MonoBehaviour:
   rotationSpeed: 360
   weapon: {fileID: 4314905031628146726}
   item: {fileID: 11400000, guid: 3949230d2326a5b4e90e71352b3a14be, type: 2}
+  item2: {fileID: 0}
 --- !u!114 &5691241720619935656
 MonoBehaviour:
   m_ObjectHideFlags: 0

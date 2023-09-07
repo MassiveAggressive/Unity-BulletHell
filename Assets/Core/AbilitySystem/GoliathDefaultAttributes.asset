@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d3490e3d1655614cb0ddbea5c129b93, type: 3}
-  m_Name: DefaultAttributes
+  m_Name: GoliathDefaultAttributes
   m_EditorClassIdentifier: 
   attributes:
   - name: MaxHealth
-    value: 100
+    value: 10000
   - name: Health
-    value: 100
+    value: 10000
   - name: MaxShield
     value: 150
   - name: Shield
