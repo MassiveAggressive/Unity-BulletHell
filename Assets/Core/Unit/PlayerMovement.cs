@@ -10,8 +10,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float walkSpeed = 10f;
     Vector2 inputVector = Vector2.zero;
 
-    //[SerializeField] float accelerationSpeed = 10f;
-
     [SerializeField] float rotationSpeed = 360f;
 
     PlayerInputActions playerInputActions;
@@ -42,7 +40,8 @@ public class PlayerMovement : MonoBehaviour
     public S_Item item2;
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.T)) 
+
+        if (Input.GetKeyDown(KeyCode.T)) 
         {
             GetComponent<InventoryEquipmentComponent>().AddItemToInventory(item);
         }

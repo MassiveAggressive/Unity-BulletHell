@@ -21,6 +21,13 @@ public abstract class AttributesComponent : MonoBehaviour
     }
     public AttributeChangedArgs attributeChangedArgs = new AttributeChangedArgs();
 
+    public event EventHandler<AttributesChangedArgs> AttributesChanged;
+    public class AttributesChangedArgs : EventArgs
+    {
+        public Dictionary<string, float> attributes;
+    }
+    public AttributesChangedArgs attributesChangedArgs = new AttributesChangedArgs();
+
     private void Awake()
     {
         if(defaultAttributeData)
@@ -35,6 +42,11 @@ public abstract class AttributesComponent : MonoBehaviour
         }
 
         AddAttributeField("BaseAttributes", baseAttributes);
+    }
+
+    public Dictionary<string, float> GetAttributes()
+    {
+        return attributes;
     }
 
     public void AddAttribute(string name, float value)
@@ -71,6 +83,11 @@ public abstract class AttributesComponent : MonoBehaviour
     {
         allAttributes[fieldName] = newAttributes;
 
+        foreach(string name in allAttributes.Keys) 
+        {
+            print(name);
+        }
+
         CalculateAllAttributes();
     }
 
@@ -96,9 +113,12 @@ public abstract class AttributesComponent : MonoBehaviour
             }
         }
 
-        foreach (string attributeName in attributes.Keys)
+        foreach(string attributeName in attributes.Keys)
         {
             print(attributeName + ": " + attributes[attributeName]);
         }
+
+        attributesChangedArgs.attributes = attributes;
+        AttributesChanged?.Invoke(this, attributesChangedArgs);
     }
 }
