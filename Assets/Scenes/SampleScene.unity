@@ -171,7 +171,7 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 0
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -1322,7 +1322,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4314905031628146726, guid: fd949854e4bdc3948b2f625b936bc1a7, type: 3}
       propertyPath: fireRate
-      value: 0
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4314905031628146726, guid: fd949854e4bdc3948b2f625b936bc1a7, type: 3}
       propertyPath: isShooting
@@ -1334,7 +1334,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4314905031628146726, guid: fd949854e4bdc3948b2f625b936bc1a7, type: 3}
       propertyPath: barrelCount
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4314905031628146726, guid: fd949854e4bdc3948b2f625b936bc1a7, type: 3}
       propertyPath: isShootAvailable
