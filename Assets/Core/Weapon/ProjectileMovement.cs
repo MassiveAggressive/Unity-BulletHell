@@ -21,7 +21,7 @@ public class ProjectileMovement : MonoBehaviour
         {
             transform.position = hit.point;
 
-            AttributesComponent attribute = hit.collider.GetComponent<AttributesComponent>();
+            AttributesContainerComponent attribute = hit.collider.GetComponent<AttributesContainerComponent>();
             if(attribute)
             {
                 attribute.SetAttribute("Health" , attribute.GetAttribute("Health") - damage);

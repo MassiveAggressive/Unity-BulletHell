@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AttributesComponent : MonoBehaviour
+public class AttributesContainerComponent : MonoBehaviour
 {
     [SerializeField] S_AttributeData defaultAttributeData;
     [SerializeField] List<Attribute> defaultAttributes = new List<Attribute>();
 
     protected Dictionary<string, float> attributes = new Dictionary<string, float>();
+    public Dictionary<string, float> Attributes { get { return attributes; } set { attributes = value; } }
 
     protected Dictionary<string, Dictionary<string, float>> allAttributes = new Dictionary<string, Dictionary<string, float>>();
 
@@ -20,6 +21,13 @@ public abstract class AttributesComponent : MonoBehaviour
         public float oldValue;
     }
     public AttributeChangedArgs attributeChangedArgs = new AttributeChangedArgs();
+
+    public event EventHandler<AttributeAboutToChangeArgs> AttributeAboutToChange;
+    public class AttributeAboutToChangeArgs : EventArgs
+    {
+        public string name;
+    }
+    public AttributeAboutToChangeArgs attributeAboutToChangeArgs = new AttributeAboutToChangeArgs();
 
     public event EventHandler<AttributesChangedArgs> AttributesChanged;
     public class AttributesChangedArgs : EventArgs
@@ -49,34 +57,27 @@ public abstract class AttributesComponent : MonoBehaviour
         return attributes;
     }
 
-    public void AddAttribute(string name, float value)
-    {
-        allAttributes["BaseAttributes"][name] = value;
-    }
-
     public float GetAttribute(string name)
     {
-        return allAttributes["BaseAttributes"][name];
+        return attributes[name];
     }
 
     public void SetAttribute(string name, float value)
     {
-        float oldValue = allAttributes["BaseAttributes"][name];
+        float oldValue = attributes[name];
 
-        allAttributes["BaseAttributes"][name] = value;
+        attributes[name] = value;
 
-        PostAttributeChanged(name, oldValue, value);
+        attributeAboutToChangeArgs.name = name;
+        AttributeAboutToChange?.Invoke(this, attributeAboutToChangeArgs);
 
         attributeChangedArgs.name = name;
         attributeChangedArgs.oldValue = oldValue;
-        attributeChangedArgs.newValue = allAttributes["BaseAttributes"][name];
+        attributeChangedArgs.newValue = attributes[name];
+
+        print(attributes[name]);
 
         AttributeChanged?.Invoke(this, attributeChangedArgs);
-    }
-
-    public virtual void PostAttributeChanged(string name, float oldValue, float newValue)
-    {
-        
     }
 
     public void AddAttributeField(string fieldName, Dictionary<string, float> newAttributes)
@@ -99,7 +100,6 @@ public abstract class AttributesComponent : MonoBehaviour
         {
             foreach(string attributeName in allAttributes[fieldName].Keys)
             {
-                //print(attributeName);
                 float currentValue = 0f;
 
                 if(attributes.ContainsKey(attributeName))

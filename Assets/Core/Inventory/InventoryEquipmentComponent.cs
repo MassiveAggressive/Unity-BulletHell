@@ -11,9 +11,9 @@ public enum ItemLocation
 
 public class InventoryEquipmentComponent : MonoBehaviour
 {
-    Dictionary<ItemInventoryType, Dictionary<int, S_ItemSlot>> inventorySlots = new Dictionary<ItemInventoryType, Dictionary<int, S_ItemSlot>>();
+    Dictionary<ItemInventoryType, Dictionary<int, SItemSlot>> inventorySlots = new Dictionary<ItemInventoryType, Dictionary<int, SItemSlot>>();
 
-    Dictionary<ItemEquipmentType, Dictionary<int, S_ItemSlot>> equipmentSlots = new Dictionary<ItemEquipmentType, Dictionary<int, S_ItemSlot>>();
+    Dictionary<ItemEquipmentType, Dictionary<int, SItemSlot>> equipmentSlots = new Dictionary<ItemEquipmentType, Dictionary<int, SItemSlot>>();
     public Dictionary<ItemEquipmentType, int> equipmentSlotSizes = new Dictionary<ItemEquipmentType, int>();
 
     Dictionary<int, ItemLocation> itemSlotLocations = new Dictionary<int, ItemLocation>();
@@ -22,7 +22,7 @@ public class InventoryEquipmentComponent : MonoBehaviour
 
     public class MovedItemSlotArgs : EventArgs
     {
-        public S_ItemSlot movedItemSlot;
+        public SItemSlot movedItemSlot;
     }
     private MovedItemSlotArgs movedItemSlot = new MovedItemSlotArgs();
 
@@ -35,11 +35,11 @@ public class InventoryEquipmentComponent : MonoBehaviour
     {
         foreach (ItemInventoryType itemInventoryType in Enum.GetValues(typeof(ItemInventoryType)))
         {
-            inventorySlots[itemInventoryType] = new Dictionary<int, S_ItemSlot>();
+            inventorySlots[itemInventoryType] = new Dictionary<int, SItemSlot>();
         }
         foreach (ItemEquipmentType itemEquipmentType in Enum.GetValues(typeof(ItemEquipmentType)))
         {
-            equipmentSlots [itemEquipmentType] = new Dictionary<int, S_ItemSlot>();
+            equipmentSlots [itemEquipmentType] = new Dictionary<int, SItemSlot>();
         }
 
         equipmentSlotSizes[ItemEquipmentType.PrimaryWeapon] = 10;
@@ -52,7 +52,7 @@ public class InventoryEquipmentComponent : MonoBehaviour
     {
         return itemSlotLocations.ContainsKey(itemSlotID);
     }
-    public bool HasItem(S_ItemSlot itemSlot)
+    public bool HasItem(SItemSlot itemSlot)
     {
         return itemSlotLocations.ContainsKey(itemSlot.slotID);
     }
@@ -77,7 +77,7 @@ public class InventoryEquipmentComponent : MonoBehaviour
         return itemLocation;
     }
 
-    public ItemLocationArgs FindItem(S_ItemSlot itemSlot)
+    public ItemLocationArgs FindItem(SItemSlot itemSlot)
     {
         ItemLocationArgs itemLocation = new ItemLocationArgs();
 
@@ -103,17 +103,17 @@ public class InventoryEquipmentComponent : MonoBehaviour
         }
     }
 
-    public bool AddItemToInventory(S_Item item)
+    public bool AddItemToInventory(SItem item)
     {
-        S_Item newItem = Instantiate(item);
+        SItem newItem = Instantiate(item);
 
-        S_ItemSlot itemSlot = ScriptableObject.CreateInstance<S_ItemSlot>();
+        SItemSlot itemSlot = ScriptableObject.CreateInstance<SItemSlot>();
         itemSlot.slotID = CreateNewID();
         itemSlot.item = newItem;
 
         ItemInventoryType itemInventoryType = newItem.itemInventoryType;
 
-        Dictionary<int, S_ItemSlot> inventorySlotsRef = inventorySlots[itemInventoryType];
+        Dictionary<int, SItemSlot> inventorySlotsRef = inventorySlots[itemInventoryType];
 
         inventorySlotsRef[itemSlot.slotID] = itemSlot;
         inventorySlots[itemInventoryType] = inventorySlotsRef;
@@ -126,11 +126,11 @@ public class InventoryEquipmentComponent : MonoBehaviour
         return true;
     }
 
-    private bool AddItemToInventory(S_ItemSlot itemSlot)
+    private bool AddItemToInventory(SItemSlot itemSlot)
     {
         ItemInventoryType itemInventoryType = itemSlot.item.itemInventoryType;
 
-        Dictionary<int, S_ItemSlot> inventorySlotsRef = inventorySlots[itemInventoryType];
+        Dictionary<int, SItemSlot> inventorySlotsRef = inventorySlots[itemInventoryType];
 
         inventorySlotsRef[itemSlot.slotID] = itemSlot;
         inventorySlots[itemInventoryType] = inventorySlotsRef;
@@ -143,13 +143,13 @@ public class InventoryEquipmentComponent : MonoBehaviour
         return true;
     }
 
-    public bool SendItemToEquipment(S_ItemSlot itemSlot)
+    public bool SendItemToEquipment(SItemSlot itemSlot)
     {
         if(AddItemToEquipment(itemSlot))
         {
             ItemInventoryType itemInventoryType = itemSlot.item.itemInventoryType;
 
-            Dictionary<int, S_ItemSlot> inventorySlotsRef = inventorySlots[itemInventoryType];
+            Dictionary<int, SItemSlot> inventorySlotsRef = inventorySlots[itemInventoryType];
 
             inventorySlotsRef.Remove(itemSlot.slotID);
             inventorySlots[itemInventoryType] = inventorySlotsRef;
@@ -162,7 +162,7 @@ public class InventoryEquipmentComponent : MonoBehaviour
         return false;
     }
 
-    private bool AddItemToEquipment(S_ItemSlot itemSlot)
+    private bool AddItemToEquipment(SItemSlot itemSlot)
     {
         int equipmentSlotSize = equipmentSlotSizes[itemSlot.item.itemEquipmentType];
         int equipmentSlotCount = equipmentSlots[itemSlot.item.itemEquipmentType].Keys.Count;
@@ -170,7 +170,7 @@ public class InventoryEquipmentComponent : MonoBehaviour
         if(equipmentSlotCount < equipmentSlotSize)
         {
             ItemEquipmentType itemEquipmentType = itemSlot.item.itemEquipmentType;
-            Dictionary<int, S_ItemSlot> equipmentSlotsRef = equipmentSlots[itemEquipmentType];
+            Dictionary<int, SItemSlot> equipmentSlotsRef = equipmentSlots[itemEquipmentType];
 
             equipmentSlotsRef[itemSlot.slotID] = itemSlot;
             equipmentSlots[itemEquipmentType] = equipmentSlotsRef;
@@ -188,12 +188,12 @@ public class InventoryEquipmentComponent : MonoBehaviour
         return false;
     }
 
-    public bool SendItemToInventory(S_ItemSlot itemSlot)
+    public bool SendItemToInventory(SItemSlot itemSlot)
     {
         if (AddItemToInventory(itemSlot))
         {
             ItemEquipmentType itemEquipmentType = itemSlot.item.itemEquipmentType;
-            Dictionary<int, S_ItemSlot> equipmentSlotsRef = equipmentSlots[itemEquipmentType];
+            Dictionary<int, SItemSlot> equipmentSlotsRef = equipmentSlots[itemEquipmentType];
 
             equipmentSlotsRef.Remove(itemSlot.slotID);
             equipmentSlots[itemEquipmentType] = equipmentSlotsRef;
@@ -231,6 +231,6 @@ public class InventoryEquipmentComponent : MonoBehaviour
             }
         }
 
-        GetComponent<AttributesComponent>().AddAttributeField("InventoryEquipmentComponent", localAttributes);
+        GetComponent<AttributesContainerComponent>().AddAttributeField("Equipments", localAttributes);
     }
 }

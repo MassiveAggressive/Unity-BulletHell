@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class S_Item : ScriptableObject
+public class SItem : ScriptableObject
 {
     public string itemName;
     public string description;
@@ -17,6 +17,7 @@ public class S_Item : ScriptableObject
     public List<Attribute> attributes; 
     public GameObject gameObject;
 }
+
 public enum ItemPrimaryType
 {
     None,
@@ -24,6 +25,7 @@ public enum ItemPrimaryType
     Generator,
     Extra
 }
+
 public enum ItemInventoryType
 {
     None,
@@ -33,6 +35,7 @@ public enum ItemInventoryType
     SpeedGenerator,
     Extra
 }
+
 public enum ItemEquipmentType
 {
     None,

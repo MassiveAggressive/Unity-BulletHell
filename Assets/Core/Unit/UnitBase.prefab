@@ -95,7 +95,8 @@ GameObject:
   - component: {fileID: 1085243951502204258}
   - component: {fileID: 1687531931163935899}
   - component: {fileID: 1662101844408105571}
-  - component: {fileID: 3331922128880912370}
+  - component: {fileID: 7597968284536557129}
+  - component: {fileID: 5953849497875317241}
   m_Layer: 8
   m_Name: UnitBase
   m_TagString: Untagged
@@ -177,7 +178,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attributesComponent: {fileID: 0}
---- !u!114 &3331922128880912370
+--- !u!114 &7597968284536557129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8448108994476967414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6658b86e3e528f64d9a71ccc43bafa6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultAttributeData: {fileID: 0}
+  defaultAttributes: []
+--- !u!114 &5953849497875317241
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,5 +204,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165f02fe6348fb34a8898ef61d599993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultAttributeData: {fileID: 11400000, guid: 7f43a2c7a646ed947b4305044b2594c4, type: 2}
-  defaultAttributes: []
+  attributesContainer: {fileID: 0}
+  defaultAttributeData: {fileID: 0}
+  defaultAttributes:
+  - name: MaxHealth
+    value: 100
+  - name: Health
+    value: 100

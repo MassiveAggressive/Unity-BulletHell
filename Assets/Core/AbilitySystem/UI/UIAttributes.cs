@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UIAttributes : MonoBehaviour
 {
-    [SerializeField] AttributesComponent attributesComponent;
+    [SerializeField] AttributesContainerComponent attributesComponent;
     private Dictionary<string, UIAttribute> attributes = new Dictionary<string, UIAttribute>();
 
     [SerializeField] GameObject UIAttributePrefab;
@@ -13,10 +13,10 @@ public class UIAttributes : MonoBehaviour
     private void Start()
     {
         attributesComponent.AttributesChanged += AttributesChanged;
-        AttributesChanged(attributesComponent, new AttributesComponent.AttributesChangedArgs { attributes = attributesComponent.GetAttributes() });
+        AttributesChanged(attributesComponent, new AttributesContainerComponent.AttributesChangedArgs { attributes = attributesComponent.GetAttributes() });
     }
 
-    private void AttributesChanged(object sender, AttributesComponent.AttributesChangedArgs e)
+    private void AttributesChanged(object sender, AttributesContainerComponent.AttributesChangedArgs e)
     {
         foreach(string attributeName in attributes.Keys) 
         {

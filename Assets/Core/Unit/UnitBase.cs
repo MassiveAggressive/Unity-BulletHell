@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class UnitBase : MonoBehaviour
 {
-    [SerializeField] AttributesComponent attributesComponent;
+    [SerializeField] AttributesContainerComponent attributesComponent;
 
     private void Awake()
     {
-        attributesComponent = GetComponent<AttributesComponent>();
+        attributesComponent = GetComponent<AttributesContainerComponent>();
         attributesComponent.AttributeChanged += AtributeChanged;
     }
 
-    private void AtributeChanged(object sender, AttributesComponent.AttributeChangedArgs e)
+    private void AtributeChanged(object sender, AttributesContainerComponent.AttributeChangedArgs e)
     {
         if(e.name == "Health" && e.newValue <= 0)
         {
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
         }
     }
 }

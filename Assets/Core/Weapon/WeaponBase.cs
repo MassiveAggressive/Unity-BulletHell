@@ -23,8 +23,12 @@ public class WeaponBase : MonoBehaviour
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] float bulletMaxSpeed = 20f;
 
+    private AttributesContainerComponent attributesComponent;
+
     private void Start()
     {
+        attributesComponent = GetComponent<AttributesContainerComponent>();
+
         barrels = new List<GameObject>();
         fireDuration = 1 / fireRate;
         CreateBarrels();

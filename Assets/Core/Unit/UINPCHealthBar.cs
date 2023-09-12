@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UINPCHealthBar : MonoBehaviour
 {
     [SerializeField] private Image healthBar;
-    [SerializeField] private AttributesComponent attributesComponent;
+    [SerializeField] private AttributesContainerComponent attributesComponent;
 
     private void Awake()
     {

@@ -15,9 +15,5 @@ MonoBehaviour:
   attributes:
   - name: MaxHealth
     value: 10000
-  - name: Health
-    value: 10000
   - name: MaxShield
-    value: 150
-  - name: Shield
     value: 150

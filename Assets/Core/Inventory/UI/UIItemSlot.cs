@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class UIItemSlot : MonoBehaviour
 {
-    private S_ItemSlot itemSlot;
-    public S_ItemSlot ItemSlot { get { return itemSlot; } set { itemSlot = value; } }
+    private SItemSlot itemSlot;
+    public SItemSlot ItemSlot { get { return itemSlot; } set { itemSlot = value; } }
 
     bool isAvailable = true;
     public bool IsAvailable { get { return isAvailable; } private set { isAvailable = value; } }
@@ -18,7 +18,7 @@ public class UIItemSlot : MonoBehaviour
 
     public event EventHandler<EventArgs> UIItemSlotClicked;
 
-    public void SetItemSlot(S_ItemSlot itemSlot)
+    public void SetItemSlot(SItemSlot itemSlot)
     {
         if (itemSlot)
         {

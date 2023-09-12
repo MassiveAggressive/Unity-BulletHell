@@ -36,14 +36,16 @@ public class PlayerMovement : MonoBehaviour
         weapon.StartShooting();
     }
 
-    public S_Item item;
-    public S_Item item2;
+    public SItem item;
+    public SItem item2;
     private void Update()
     {
 
         if (Input.GetKeyDown(KeyCode.T)) 
         {
             GetComponent<InventoryEquipmentComponent>().AddItemToInventory(item);
+
+            GetComponent<AttributesContainerComponent>().SetAttribute("Health", GetComponent<AttributesContainerComponent>().GetAttribute("Health") - 10);
         }
         if(Input.GetKeyDown(KeyCode.Y)) 
         {
@@ -58,13 +60,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Time.timeScale = 1f;
         }
-
-        //Vector2 lastDirection = inputVector;
-        //inputVector = playerInputActions.Movement.InputVector.ReadValue<Vector2>();
-
-        //float deltaAngle = (Mathf.Atan2(lastDirection.y, lastDirection.x) * Mathf.Rad2Deg);
-
-        //print(deltaAngle);
 
         inputVector = playerInputActions.Movement.InputVector.ReadValue<Vector2>();
         Vector2 moveDelta = inputVector.normalized * walkSpeed * Time.deltaTime;
