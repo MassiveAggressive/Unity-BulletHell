@@ -25,5 +25,7 @@ MonoBehaviour:
   - name: MaxDamage
     value: 10
   - name: MaxFireRate
-    value: 0.1
+    value: 1
+  - name: BarrelCount
+    value: 0
   gameObject: {fileID: 0}

@@ -17,3 +17,7 @@ MonoBehaviour:
     value: 10000
   - name: MaxShield
     value: 150
+  - name: MaxFireRate
+    value: 0
+  - name: BarrelCount
+    value: 0

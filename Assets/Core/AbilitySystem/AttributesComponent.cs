@@ -2,6 +2,7 @@ using AttributeData;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class AttributesContainerComponent : MonoBehaviour
 {
@@ -27,14 +28,14 @@ public class AttributesContainerComponent : MonoBehaviour
     {
         public string name;
     }
-    public AttributeAboutToChangeArgs attributeAboutToChangeArgs = new AttributeAboutToChangeArgs();
+    private AttributeAboutToChangeArgs attributeAboutToChangeArgs = new AttributeAboutToChangeArgs();
 
     public event EventHandler<AttributesChangedArgs> AttributesChanged;
     public class AttributesChangedArgs : EventArgs
     {
         public Dictionary<string, float> attributes;
     }
-    public AttributesChangedArgs attributesChangedArgs = new AttributesChangedArgs();
+    private AttributesChangedArgs attributesChangedArgs = new AttributesChangedArgs();
 
     private void Awake()
     {
@@ -57,37 +58,53 @@ public class AttributesContainerComponent : MonoBehaviour
         return attributes;
     }
 
-    public float GetAttribute(string name)
+    public class GetAttributeArgs : EventArgs
     {
-        return attributes[name];
+        public float value = 0f;
+        public bool found = false;
+    }
+    private GetAttributeArgs getAttributeArgs = new GetAttributeArgs();
+
+    public GetAttributeArgs GetAttribute(string name)
+    {
+        if(attributes.ContainsKey(name))
+        {
+            getAttributeArgs.value = attributes[name];
+            getAttributeArgs.found = true;
+        }
+        else
+        {
+            getAttributeArgs.value = 0f;
+            getAttributeArgs.found = false;
+        }
+
+        return getAttributeArgs;
     }
 
     public void SetAttribute(string name, float value)
     {
-        float oldValue = attributes[name];
+        print(name);
+        if(attributes.ContainsKey(name))
+        {
+            float oldValue = attributes[name];
 
-        attributes[name] = value;
+            attributes[name] = value;
 
-        attributeAboutToChangeArgs.name = name;
-        AttributeAboutToChange?.Invoke(this, attributeAboutToChangeArgs);
+            attributeAboutToChangeArgs.name = name;
+            AttributeAboutToChange?.Invoke(this, attributeAboutToChangeArgs);
 
-        attributeChangedArgs.name = name;
-        attributeChangedArgs.oldValue = oldValue;
-        attributeChangedArgs.newValue = attributes[name];
+            attributeChangedArgs.name = name;
+            attributeChangedArgs.oldValue = oldValue;
+            attributeChangedArgs.newValue = attributes[name];
 
-        print(attributes[name]);
 
-        AttributeChanged?.Invoke(this, attributeChangedArgs);
+            AttributeChanged?.Invoke(this, attributeChangedArgs);
+        }
     }
 
     public void AddAttributeField(string fieldName, Dictionary<string, float> newAttributes)
     {
         allAttributes[fieldName] = newAttributes;
-
-        foreach(string name in allAttributes.Keys) 
-        {
-            print(name);
-        }
 
         CalculateAllAttributes();
     }
@@ -113,12 +130,15 @@ public class AttributesContainerComponent : MonoBehaviour
             }
         }
 
-        foreach(string attributeName in attributes.Keys)
-        {
-            print(attributeName + ": " + attributes[attributeName]);
-        }
-
         attributesChangedArgs.attributes = attributes;
         AttributesChanged?.Invoke(this, attributesChangedArgs);
+
+        foreach(string attributeName in attributes.Keys)
+        {
+            attributeChangedArgs.name = attributeName;
+            attributeChangedArgs.newValue = attributes[attributeName];
+
+            AttributeChanged?.Invoke(this, attributeChangedArgs);
+        }
     }
 }

@@ -10,8 +10,8 @@ public class WeaponBase : MonoBehaviour
     float fireDuration = 1f;
 
     [SerializeField] int barrelCount = 1;
-    [SerializeField] float barrelDistance = 1f;
-    [SerializeField] float barrelAngle = 5f;
+    [SerializeField] float barrelDistance = 0.1f;
+    [SerializeField] float barrelAngle = 2f;
     List<GameObject> barrels;
 
     [SerializeField] bool isShooting = true;
@@ -21,18 +21,40 @@ public class WeaponBase : MonoBehaviour
     float timePool = 0f;
 
     [SerializeField] GameObject bulletPrefab;
-    [SerializeField] float bulletMaxSpeed = 20f;
+    [SerializeField] float bulletMaxSpeed = 25f;
 
-    private AttributesContainerComponent attributesComponent;
+    [SerializeField] AttributesContainerComponent attributesContainerComponent;
 
     private void Start()
     {
-        attributesComponent = GetComponent<AttributesContainerComponent>();
+        attributesContainerComponent.AttributeChanged += AttributeChanged;
+
+        //fireRate = attributesContainerComponent.GetAttribute("FireRate").value;
+        //fireRate = attributesContainerComponent.GetAttribute("BarrelCount").value;
 
         barrels = new List<GameObject>();
         fireDuration = 1 / fireRate;
         CreateBarrels();
         enabled = false;
+    }
+
+    private void AttributeChanged(object sender, AttributesContainerComponent.AttributeChangedArgs e)
+    {
+        switch (e.name) 
+        {
+            case "MaxFireRate":
+                print(e.name + ": " + e.newValue);
+                fireRate = e.newValue;
+                print("fireRate: " + fireRate);
+                fireDuration = 1 / fireRate;
+                break;
+            case "BarrelCount":
+                barrelCount = (int)e.newValue;
+                CreateBarrels();
+                break;
+            default: 
+                break;
+        }
     }
 
     private void Update()
@@ -65,14 +87,14 @@ public class WeaponBase : MonoBehaviour
     {
         foreach(GameObject barrel in barrels) 
         {
-            barrels.Remove(barrel);
             Destroy(barrel);
         }
+        barrels.Clear();
 
         for (int i = 0; i < barrelCount; i++)
         {
             Vector3 barrelPosition = new Vector3(i * barrelDistance - ((barrelCount - 1) * barrelDistance) / 2, 0f, 0f);
-            Quaternion barrelRotation = Quaternion.Euler(0f, 0f, ((barrelCount - 1) * barrelAngle) / 2 - i * barrelAngle);
+            Quaternion barrelRotation = Quaternion.Euler(0f, i * barrelAngle - ((barrelCount - 1) * barrelAngle) / 2, 0f);
             GameObject barrelInstance = new GameObject();
             barrelInstance.transform.parent = transform;
             barrelInstance.transform.localPosition = barrelPosition;
@@ -88,12 +110,15 @@ public class WeaponBase : MonoBehaviour
 
     public void StartShooting()
     {
-        isShooting = true;
-        if(isShootAvailable)
+        if(fireRate > 0f) 
         {
-            Shoot();
+            isShooting = true;
+            if (isShootAvailable)
+            {
+                Shoot();
+            }
+            enabled = true;
         }
-        enabled = true;
     }
 
     public void StopShooting()
@@ -113,10 +138,12 @@ public class WeaponBase : MonoBehaviour
     void Shoot(float distance = 0f)
     {
         isShootAvailable = false;
-        foreach(GameObject barrel in barrels) 
+
+        foreach(GameObject barrel in barrels)
         {
-            Vector3 bulletPositionDelta = barrel.transform.up * distance * bulletMaxSpeed;
+            Vector3 bulletPositionDelta = barrel.transform.forward * distance * bulletMaxSpeed;
             GameObject bulletInstance = Instantiate(bulletPrefab, barrel.transform.position + bulletPositionDelta, barrel.transform.rotation);
+            bulletInstance.GetComponent<ProjectileMovement>().damage = attributesContainerComponent.GetAttribute("Damage").value;
         }
     }
 }

@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     Vector2 inputVector = Vector2.zero;
 
     [SerializeField] float rotationSpeed = 360f;
+    Quaternion targetRotation = Quaternion.identity;
 
     PlayerInputActions playerInputActions;
 
@@ -43,13 +44,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T)) 
         {
-            GetComponent<InventoryEquipmentComponent>().AddItemToInventory(item);
-
-            GetComponent<AttributesContainerComponent>().SetAttribute("Health", GetComponent<AttributesContainerComponent>().GetAttribute("Health") - 10);
+            GetComponent<AttributesContainerComponent>().SetAttribute("MaxFireRate", GetComponent<AttributesContainerComponent>().GetAttribute("MaxFireRate").value + 1);
+            //GetComponent<InventoryEquipmentComponent>().AddItemToInventory(item);
         }
         if(Input.GetKeyDown(KeyCode.Y)) 
         {
-            GetComponent<InventoryEquipmentComponent>().AddItemToInventory(item2);
+            GetComponent<AttributesContainerComponent>().SetAttribute("BarrelCount", GetComponent<AttributesContainerComponent>().GetAttribute("BarrelCount").value + 1);
+            //GetComponent<InventoryEquipmentComponent>().AddItemToInventory(item2);
         }
 
         if(Input.GetKeyDown(KeyCode.G))
@@ -61,10 +62,18 @@ public class PlayerMovement : MonoBehaviour
             Time.timeScale = 1f;
         }
 
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
+        {
+            targetRotation = Quaternion.LookRotation((hit.point - transform.position).normalized);
+        }
+
         inputVector = playerInputActions.Movement.InputVector.ReadValue<Vector2>();
         Vector2 moveDelta = inputVector.normalized * walkSpeed * Time.deltaTime;
 
-        transform.position += new Vector3(moveDelta.x, moveDelta.y);
+        transform.position += new Vector3(moveDelta.x, 0f, moveDelta.y);
 
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0f;
@@ -72,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
         float Angle = Mathf.Atan2(mousePosition.y - transform.position.y, mousePosition.x - transform.position.x) * Mathf.Rad2Deg;
 
         float rotationDelta = rotationSpeed * Time.deltaTime;
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, Angle), rotationDelta);
+        //Quaternion.Euler(0, 0, Angle)
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation , rotationDelta);
     }
 }

@@ -15,6 +15,6 @@ public class UINPCHealthBar : MonoBehaviour
 
     private void Update()
     {
-        healthBar.fillAmount = attributesComponent.GetAttribute("Health") / attributesComponent.GetAttribute("MaxHealth");
+        healthBar.fillAmount = attributesComponent.GetAttribute("Health").value / attributesComponent.GetAttribute("MaxHealth").value;
     }
 }

@@ -34,7 +34,8 @@ public class HealthAttributeDriver : MonoBehaviour
     {
         if(e.name == "Health")
         {
-            attributesContainer.Attributes["Health"] = Mathf.Clamp(attributesContainer.GetAttribute("Health"), 0f, attributesContainer.GetAttribute("MaxHealth"));
+            attributesContainer.Attributes["Health"] = Mathf.Clamp(attributesContainer.GetAttribute("Health").value, 
+                                                            0f, attributesContainer.GetAttribute("MaxHealth").value);
         }
     }
 }
